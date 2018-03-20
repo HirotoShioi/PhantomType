@@ -1,0 +1,2 @@
+# PhantomType
+Example of PhantomType

@@ -40,7 +40,7 @@ decrypt (Message c t f isEnc) = if not isEnc
                      in  decryptC  numList
 
 error1 :: Message
-error1 = decrypt $ message "Hello word" "Hiroto" "Lars"
+error1 = decrypt $ message "Hello word" "Hiroto" "Denis"
 
 error2 :: Message
-error2 = encrypt $ encrypt $ message "Hello word" "Hiroto" "Lars"
+error2 = encrypt $ encrypt $ message "Hello word" "Hiroto" "Denis"
