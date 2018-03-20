@@ -33,3 +33,7 @@ decrypt (Message c) = Message (decContent c)
     decContent str = let numList = words str
                          decryptC = map (chr . read @ Int)
                      in  decryptC  numList
+
+-- error1 = decrypt $ message "Hello word"
+
+-- error2 = encrypt $ encrypt $ message "Hello word"
