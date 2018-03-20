@@ -8,31 +8,24 @@ module EncryptNaive (
 
 import Data.Char (chr, ord)
 
-type Address = String
+data Message = Message String Bool deriving Show
 
-data Message = Message {
-               content :: String
-             , to          :: Address
-             , from        :: Address
-             , isEncrypted :: Bool
-             } deriving Show
-
-message :: String -> Address -> Address -> Message
-message c t f = Message c t f False 
+message :: String -> Message
+message c = Message c False 
 
 encrypt :: Message -> Message
-encrypt (Message c t f isEnc) = if isEnc
+encrypt (Message c isEnc) = if isEnc
                                 then error "Content is already encrypted"
-                                else Message (encContent c) t f True
+                                else Message (encContent c) True
   where 
     encContent :: String -> String
     encContent str = let toNum = map ord str
                      in foldr (\x acc -> show x ++ " " ++ acc) [] toNum
 
 decrypt :: Message -> Message
-decrypt (Message c t f isEnc) = if not isEnc
+decrypt (Message c isEnc) = if not isEnc
                                 then error "Content is already decrypted"
-                                else Message (decContent c) t f False
+                                else Message (decContent c) False
   where
     decContent :: String -> String
     decContent str = let numList = words str
@@ -40,7 +33,7 @@ decrypt (Message c t f isEnc) = if not isEnc
                      in  decryptC  numList
 
 error1 :: Message
-error1 = decrypt $ message "Hello word" "Hiroto" "Denis"
+error1 = decrypt $ message "Hello word"
 
 error2 :: Message
-error2 = encrypt $ encrypt $ message "Hello word" "Hiroto" "Denis"
+error2 = encrypt $ encrypt $ message "Hello word"

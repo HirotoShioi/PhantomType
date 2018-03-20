@@ -11,31 +11,25 @@ module EncryptPhantomExtra (
 import Data.Char (chr, ord)
 
 data Encrypted
-data Decrypted
+data Plain
 
-data Message a = Message {
-               content :: String
-             , to      :: Address
-             , from    :: Address
-             } deriving Show
-
-type Address = String
+newtype Message a = Message String deriving Show
 
 type Enc = Message Encrypted
-type Dec = Message Decrypted
+type Dec = Message Plain
 
-message :: String -> Address -> Address -> Dec
+message :: String -> Dec
 message = Message
 
 encrypt :: Dec -> Enc
-encrypt (Message c t f) = Message (encContent c) t f
+encrypt (Message c) = Message (encContent c)
   where 
     encContent :: String -> String
     encContent str = let toNum = map ord str
                      in foldr (\x acc -> show x ++ " " ++ acc) [] toNum
 
 decrypt :: Enc -> Dec
-decrypt (Message c t f) = Message (decContent c) t f
+decrypt (Message c) = Message (decContent c)
   where
     decContent :: String -> String
     decContent str = let numList = words str

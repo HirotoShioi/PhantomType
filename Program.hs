@@ -2,11 +2,11 @@ module Program where
 
 import EncryptPhantom
 
-test :: Message Decrypted
-test = message "Hello world" "Hiroto" "Denis"
+test :: Message Plain
+test = message "Hello world"
 
-decryptedMessage :: Message Decrypted
-decryptedMessage = decrypt $ encrypt test
+decryptMessage :: Message Plain
+decryptMessage = decrypt $ encrypt test
 
 encryptedMessage :: Message Encrypted
 encryptedMessage = encrypt test
